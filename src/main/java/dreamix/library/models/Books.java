@@ -1,30 +1,39 @@
 package dreamix.library.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
 @Entity
-public class Books {
-
-    @Id
-    private Integer book_id;
+public class Books extends IdSubclass {
 
     private String title;
 
-    private Integer author_id;
+    @ManyToMany(mappedBy = "books")
+    private List<Authors> authors;
 
-    private Integer genre_id;
+    @ManyToMany(mappedBy = "books")
+    private List<Genres> genres;
 
-    private Integer form_id;
+    @ManyToOne
+    @JoinColumn
+    private Forms form;
 
     private Integer year;
 
-    private Integer language_id;
+    @ManyToMany(mappedBy = "books")
+    private List<Languages> languages;
 
-    private Integer copy_id;
+    @OneToMany(mappedBy = "book")
+    private List<Copies> copies;
+
+    @ManyToOne
+    @JoinColumn
+    private User_card userCard;
 }

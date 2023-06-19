@@ -1,20 +1,23 @@
 package dreamix.library.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
 @Entity
-public class User_card {
+public class User_card extends IdSubclass {
 
-    @Id
-    private Integer card_id;
+    @OneToOne
+    private Users user;
 
-    private Integer book_id;
+    @OneToMany(mappedBy = "userCard")
+    private List<Books> books;
 
     private String take_date;
 
