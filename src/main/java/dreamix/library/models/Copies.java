@@ -16,7 +16,14 @@ public class Copies extends IdSubclass {
 
     private Integer copy_number;
 
+    private Boolean isAvailable;
+
     @ManyToOne
     @JoinColumn
     private Books book;
+
+    public Copies(Integer copy_number, Boolean isAvailable) {
+        this.copy_number = copy_number;
+        this.isAvailable = isAvailable;
+    }
 }

@@ -17,4 +17,8 @@ public class Users extends IdSubclass {
 
     @OneToOne(mappedBy = "user")
     private User_card card;
+
+    public Users(String name) {
+        this.name = name;
+    }
 }

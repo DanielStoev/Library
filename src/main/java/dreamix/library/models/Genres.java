@@ -24,4 +24,9 @@ public class Genres extends IdSubclass {
             joinColumns = @JoinColumn(name = "genre_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Books> books;
+
+    public Genres(String genre) {
+        this.genre = genre;
+    }
+
 }

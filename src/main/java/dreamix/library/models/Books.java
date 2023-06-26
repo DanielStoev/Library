@@ -10,7 +10,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
-@Entity
+@Entity(name = "BOOKS")
 public class Books extends IdSubclass {
 
     private String title;

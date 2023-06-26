@@ -25,4 +25,8 @@ public class Authors extends IdSubclass {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Books> books;
+
+    public Authors(String name) {
+        this.name = name;
+    }
 }

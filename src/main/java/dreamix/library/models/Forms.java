@@ -18,4 +18,8 @@ public class Forms extends IdSubclass {
 
     @OneToMany(mappedBy = "form")
     private List<Books> books;
+
+    public Forms(String form) {
+        this.form = form;
+    }
 }

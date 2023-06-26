@@ -10,7 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Data
 @Entity
@@ -24,4 +24,8 @@ public class Languages extends IdSubclass {
             joinColumns = @JoinColumn(name = "languages_id"),
             inverseJoinColumns = @JoinColumn(name = "books_id"))
     private List<Books> books;
+
+    public Languages(String language) {
+        this.language = language;
+    }
 }
