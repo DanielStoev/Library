@@ -10,4 +10,9 @@ public class CopiesRepository extends SubRepository<Copies> {
     public String getEntityName() {
         return Copies.class.getSimpleName();
     }
+
+    @Override
+    public Class<Copies> getEntityClass() {
+        return Copies.class;
+    }
 }

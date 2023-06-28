@@ -10,4 +10,9 @@ public class FormsRepository extends SubRepository<Forms> {
     public String getEntityName() {
         return Forms.class.getSimpleName();
     }
+
+    @Override
+    public Class<Forms> getEntityClass() {
+        return Forms.class;
+    }
 }

@@ -10,4 +10,9 @@ public class LanguagesRepository extends SubRepository<Languages> {
     public String getEntityName() {
         return Languages.class.getSimpleName();
     }
+
+    @Override
+    public Class<Languages> getEntityClass() {
+        return Languages.class;
+    }
 }

@@ -10,4 +10,9 @@ public class GenresRepository extends SubRepository<Genres> {
     public String getEntityName() {
         return Genres.class.getSimpleName();
     }
+
+    @Override
+    public Class<Genres> getEntityClass() {
+        return Genres.class;
+    }
 }

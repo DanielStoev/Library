@@ -1,32 +1,48 @@
 package dreamix.library.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public abstract class SubRepository<T> {
-    @PersistenceUnit
-    private EntityManagerFactory entityManagerFactory;
+
+    @PersistenceContext
+    @Autowired
+    private EntityManager entityManager;
 
     public abstract String getEntityName();
 
+    public abstract Class<T> getEntityClass();
+
 
     public List<T> findAll() {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.createQuery("from " + getEntityName()).getResultList();
+    }
+
+    public Object findById(Integer id) {
+        String entityName = getEntityName();
+        String jpql = "from " + entityName;
+        return entityManager.createQuery(jpql + " where id = :id").setParameter("id", id).getSingleResult();
     }
 
     @Transactional
     public void create(T object) {
         try {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
             entityManager.persist(object);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional
+    public void update(T object) {
+        try {
+            entityManager.merge(object);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,7 +51,6 @@ public abstract class SubRepository<T> {
     @Transactional
     public void delete(Integer id) {
         try {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
             String entityName = getEntityName();
             String jpql = "delete from " + entityName;
             entityManager.createQuery(jpql + " where id = :id")

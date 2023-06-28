@@ -6,9 +6,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AuthorsRepository extends SubRepository<Authors> {
 
-
     @Override
     public String getEntityName() {
         return Authors.class.getSimpleName();
+    }
+
+    @Override
+    public Class<Authors> getEntityClass() {
+        return Authors.class;
     }
 }
