@@ -11,10 +11,30 @@ public class LanguageService {
     @Autowired
     private LanguagesRepository languagesRepository;
 
-    public void test() {
-        for (Languages languages : languagesRepository.findAll()
+    public void findAll() {
+        for (Languages language : languagesRepository.findAll()
         ) {
-            System.out.println(languages);
+            System.out.println(language.getId());
         }
     }
+
+    public void findById(Integer id) {
+        System.out.println(((Languages) languagesRepository.findById(id)).getLanguage());
+    }
+
+    public void create() {
+        Languages language = new Languages();
+        languagesRepository.create(language);
+    }
+
+    public void update() {
+        Languages language = new Languages();
+        languagesRepository.update(language);
+    }
+
+    public void delete(Integer id) {
+        languagesRepository.delete(id);
+    }
 }
+
+

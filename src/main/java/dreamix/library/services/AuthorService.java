@@ -19,16 +19,16 @@ public class AuthorService {
     }
 
     public void findById(Integer id) {
-        System.out.println(((Authors) authorsRepository.findById(8)).getName());
+        System.out.println(((Authors) authorsRepository.findById(id)).getName());
     }
 
     public void create() {
-        Authors authors = new Authors("naoibfauopfbauof");
+        Authors authors = new Authors();
         authorsRepository.create(authors);
     }
 
     public void update() {
-        Authors authors = new Authors("naoibfauopfbauof");
+        Authors authors = new Authors();
         authorsRepository.update(authors);
     }
 

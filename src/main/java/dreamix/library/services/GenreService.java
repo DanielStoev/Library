@@ -11,10 +11,30 @@ public class GenreService {
     @Autowired
     private GenresRepository genresRepository;
 
-    public void test() {
-        for (Genres genres : genresRepository.findAll()
+    public void findAll() {
+        for (Genres genre : genresRepository.findAll()
         ) {
-            System.out.println(genres);
+            System.out.println(genre.getId());
         }
     }
+
+    public void findById(Integer id) {
+        System.out.println(((Genres) genresRepository.findById(id)).getGenre());
+    }
+
+    public void create() {
+        Genres genre = new Genres();
+        genresRepository.create(genre);
+    }
+
+    public void update() {
+        Genres genre = new Genres();
+        genresRepository.update(genre);
+    }
+
+    public void delete(Integer id) {
+        genresRepository.delete(id);
+    }
 }
+
+

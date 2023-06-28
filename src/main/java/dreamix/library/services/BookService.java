@@ -11,10 +11,30 @@ public class BookService {
     @Autowired
     private BooksRepository booksRepository;
 
-    public void test() {
+    public void findAll() {
         for (Books book : booksRepository.findAll()
         ) {
-            System.out.println(book);
+            System.out.println(book.getId());
         }
     }
+
+    public void findById(Integer id) {
+        System.out.println(((Books) booksRepository.findById(id)).getTitle());
+    }
+
+    public void create() {
+        Books book = new Books();
+        booksRepository.create(book);
+    }
+
+    public void update() {
+        Books book = new Books();
+        booksRepository.update(book);
+    }
+
+    public void delete(Integer id) {
+        booksRepository.delete(id);
+    }
 }
+
+

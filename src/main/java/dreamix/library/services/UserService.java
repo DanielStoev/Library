@@ -11,10 +11,30 @@ public class UserService {
     @Autowired
     private UsersRepository usersRepository;
 
-    public void test() {
+    public void findAll() {
         for (Users users : usersRepository.findAll()
         ) {
-            System.out.println(users);
+            System.out.println(users.getId());
         }
     }
+
+    public void findById(Integer id) {
+        System.out.println(((Users) usersRepository.findById(id)).getName());
+    }
+
+    public void create() {
+        Users users = new Users();
+        usersRepository.create(users);
+    }
+
+    public void update() {
+        Users users = new Users();
+        usersRepository.update(users);
+    }
+
+    public void delete(Integer id) {
+        usersRepository.delete(id);
+    }
 }
+
+
