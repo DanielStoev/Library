@@ -20,12 +20,12 @@ public class LanguageController {
     }
 
     @PostMapping("/add")
-    public Languages addRecord(@RequestBody Languages language) {
+    public Languages create(@RequestBody Languages language) {
         return languageService.create(language);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteRecord(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         languageService.delete(id);
     }
 }

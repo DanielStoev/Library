@@ -14,11 +14,7 @@ public class FormService {
     private FormsRepository formsRepository;
 
     public List<Forms> findAll() {
-        for (Forms form : formsRepository.findAll()
-        ) {
-            System.out.println(form.getForm());
-        }
-        return null;
+        return formsRepository.findAll();
     }
 
     public void findById(Integer id) {

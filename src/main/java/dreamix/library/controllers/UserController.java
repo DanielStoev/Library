@@ -20,12 +20,12 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public Users addRecord(@RequestBody Users user) {
+    public Users create(@RequestBody Users user) {
         return userService.create(user);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteRecord(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         userService.delete(id);
     }
 }

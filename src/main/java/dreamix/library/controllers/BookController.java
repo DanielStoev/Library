@@ -20,12 +20,12 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public Books addRecord(@RequestBody Books book) {
+    public Books create(@RequestBody Books book) {
         return bookService.create(book);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteRecord(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         bookService.delete(id);
     }
 }

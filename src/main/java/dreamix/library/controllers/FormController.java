@@ -20,12 +20,12 @@ public class FormController {
     }
 
     @PostMapping("/add")
-    public Forms addRecord(@RequestBody Forms form) {
+    public Forms create(@RequestBody Forms form) {
         return formService.create(form);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteRecord(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         formService.delete(id);
     }
 }

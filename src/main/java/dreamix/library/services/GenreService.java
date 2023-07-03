@@ -14,11 +14,7 @@ public class GenreService {
     private GenresRepository genresRepository;
 
     public List<Genres> findAll() {
-        for (Genres genre : genresRepository.findAll()
-        ) {
-            System.out.println(genre.getGenre());
-        }
-        return null;
+        return genresRepository.findAll();
     }
 
     public void findById(Integer id) {

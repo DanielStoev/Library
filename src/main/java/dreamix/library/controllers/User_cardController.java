@@ -20,12 +20,12 @@ public class User_cardController {
     }
 
     @PostMapping("/add")
-    public User_card addRecord(@RequestBody User_card userCard) {
+    public User_card create(@RequestBody User_card userCard) {
         return userCardService.create(userCard);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteRecord(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         userCardService.delete(id);
     }
 }

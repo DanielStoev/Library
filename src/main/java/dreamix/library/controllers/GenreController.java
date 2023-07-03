@@ -20,12 +20,12 @@ public class GenreController {
     }
 
     @PostMapping("/add")
-    public Genres addRecord(@RequestBody Genres genre) {
+    public Genres create(@RequestBody Genres genre) {
         return genreService.create(genre);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteRecord(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         genreService.delete(id);
     }
 }

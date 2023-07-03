@@ -14,11 +14,8 @@ public class AuthorService {
     private AuthorsRepository authorsRepository;
 
     public List<Authors> findAll() {
-        for (Authors author : authorsRepository.findAll()
-        ) {
-            System.out.println(author.getName());
-        }
-        return null;
+        return authorsRepository.findAll();
+
     }
 
     public void findById(Integer id) {

@@ -1,6 +1,5 @@
 package dreamix.library.services;
 
-
 import dreamix.library.models.Copies;
 import dreamix.library.repositories.CopiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,7 @@ public class CopyService {
     private CopiesRepository copiesRepository;
 
     public List<Copies> findAll() {
-        for (Copies copy : copiesRepository.findAll()
-        ) {
-            System.out.println(copy.getCopy_number());
-        }
-        return null;
+        return copiesRepository.findAll();
     }
 
     public void findById(Integer id) {

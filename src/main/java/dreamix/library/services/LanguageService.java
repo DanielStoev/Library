@@ -14,11 +14,7 @@ public class LanguageService {
     private LanguagesRepository languagesRepository;
 
     public List<Languages> findAll() {
-        for (Languages language : languagesRepository.findAll()
-        ) {
-            System.out.println(language.getLanguage());
-        }
-        return null;
+        return languagesRepository.findAll();
     }
 
     public void findById(Integer id) {

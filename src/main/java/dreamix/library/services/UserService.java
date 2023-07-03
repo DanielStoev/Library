@@ -14,11 +14,7 @@ public class UserService {
     private UsersRepository usersRepository;
 
     public List<Users> findAll() {
-        for (Users users : usersRepository.findAll()
-        ) {
-            System.out.println(users.getName());
-        }
-        return null;
+        return usersRepository.findAll();
     }
 
     public void findById(Integer id) {

@@ -20,12 +20,12 @@ public class CopyController {
     }
 
     @PostMapping("/add")
-    public Copies addRecord(@RequestBody Copies copy) {
+    public Copies create(@RequestBody Copies copy) {
         return copyService.create(copy);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteRecord(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         copyService.delete(id);
     }
 }

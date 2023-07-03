@@ -1,5 +1,6 @@
 package dreamix.library.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class Users extends IdSubclass {
 
     private String name;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "user")
     private User_card card;
 

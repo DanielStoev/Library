@@ -14,11 +14,7 @@ public class BookService {
     private BooksRepository booksRepository;
 
     public List<Books> findAll() {
-        for (Books book : booksRepository.findAll()
-        ) {
-            System.out.println(book.getTitle());
-        }
-        return null;
+        return booksRepository.findAll();
     }
 
     public void findById(Integer id) {

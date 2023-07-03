@@ -14,11 +14,7 @@ public class User_cardService {
     private User_cardRepository userCardRepository;
 
     public List<User_card> findAll() {
-        for (User_card userCard : userCardRepository.findAll()
-        ) {
-            System.out.println(userCard.getUser());
-        }
-        return null;
+        return userCardRepository.findAll();
     }
 
     public void findById(Integer id) {
