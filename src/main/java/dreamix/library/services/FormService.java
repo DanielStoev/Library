@@ -5,26 +5,29 @@ import dreamix.library.repositories.FormsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FormService {
 
     @Autowired
     private FormsRepository formsRepository;
 
-    public void findAll() {
+    public List<Forms> findAll() {
         for (Forms form : formsRepository.findAll()
         ) {
-            System.out.println(form.getId());
+            System.out.println(form.getForm());
         }
+        return null;
     }
 
     public void findById(Integer id) {
         System.out.println(((Forms) formsRepository.findById(id)).getForm());
     }
 
-    public void create() {
-        Forms form = new Forms();
+    public Forms create(Forms form) {
         formsRepository.create(form);
+        return form;
     }
 
     public void update() {

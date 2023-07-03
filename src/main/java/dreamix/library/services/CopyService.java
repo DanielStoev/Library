@@ -6,26 +6,29 @@ import dreamix.library.repositories.CopiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CopyService {
 
     @Autowired
     private CopiesRepository copiesRepository;
 
-    public void findAll() {
+    public List<Copies> findAll() {
         for (Copies copy : copiesRepository.findAll()
         ) {
-            System.out.println(copy.getId());
+            System.out.println(copy.getCopy_number());
         }
+        return null;
     }
 
     public void findById(Integer id) {
         System.out.println(((Copies) copiesRepository.findById(id)).getBook());
     }
 
-    public void create() {
-        Copies copy = new Copies();
+    public Copies create(Copies copy) {
         copiesRepository.create(copy);
+        return copy;
     }
 
     public void update() {

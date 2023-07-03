@@ -5,10 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -18,12 +16,8 @@ public class Genres extends IdSubclass {
 
     private String genre;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_genre",
-            joinColumns = @JoinColumn(name = "genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private List<Books> books;
+    @ManyToMany(mappedBy = "genres")
+    private Set<Books> books;
 
     public Genres(String genre) {
         this.genre = genre;

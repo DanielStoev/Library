@@ -5,26 +5,29 @@ import dreamix.library.repositories.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookService {
 
     @Autowired
     private BooksRepository booksRepository;
 
-    public void findAll() {
+    public List<Books> findAll() {
         for (Books book : booksRepository.findAll()
         ) {
-            System.out.println(book.getId());
+            System.out.println(book.getTitle());
         }
+        return null;
     }
 
     public void findById(Integer id) {
         System.out.println(((Books) booksRepository.findById(id)).getTitle());
     }
 
-    public void create() {
-        Books book = new Books();
+    public Books create(Books book) {
         booksRepository.create(book);
+        return book;
     }
 
     public void update() {

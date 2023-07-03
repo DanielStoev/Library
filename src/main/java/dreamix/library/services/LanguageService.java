@@ -5,26 +5,29 @@ import dreamix.library.repositories.LanguagesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LanguageService {
 
     @Autowired
     private LanguagesRepository languagesRepository;
 
-    public void findAll() {
+    public List<Languages> findAll() {
         for (Languages language : languagesRepository.findAll()
         ) {
-            System.out.println(language.getId());
+            System.out.println(language.getLanguage());
         }
+        return null;
     }
 
     public void findById(Integer id) {
         System.out.println(((Languages) languagesRepository.findById(id)).getLanguage());
     }
 
-    public void create() {
-        Languages language = new Languages();
+    public Languages create(Languages language) {
         languagesRepository.create(language);
+        return language;
     }
 
     public void update() {

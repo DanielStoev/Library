@@ -5,26 +5,29 @@ import dreamix.library.repositories.User_cardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class User_cardService {
 
     @Autowired
     private User_cardRepository userCardRepository;
 
-    public void findAll() {
+    public List<User_card> findAll() {
         for (User_card userCard : userCardRepository.findAll()
         ) {
-            System.out.println(userCard.getId());
+            System.out.println(userCard.getUser());
         }
+        return null;
     }
 
     public void findById(Integer id) {
         System.out.println(((User_card) userCardRepository.findById(id)).getUser());
     }
 
-    public void create() {
-        User_card userCard = new User_card();
+    public User_card create(User_card userCard) {
         userCardRepository.create(userCard);
+        return userCard;
     }
 
     public void update() {

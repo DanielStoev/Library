@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
-@Entity(name = "BOOKS")
+@Entity
 public class Books extends IdSubclass {
 
     private String title;
@@ -18,8 +19,12 @@ public class Books extends IdSubclass {
     @ManyToMany(mappedBy = "books")
     private List<Authors> authors;
 
-    @ManyToMany(mappedBy = "books")
-    private List<Genres> genres;
+    @ManyToMany
+    @JoinTable(
+            name = "book_genre",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<Genres> genres;
 
     @ManyToOne
     @JoinColumn
