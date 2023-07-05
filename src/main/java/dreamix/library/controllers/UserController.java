@@ -1,5 +1,6 @@
 package dreamix.library.controllers;
 
+import dreamix.library.dtos.UsersDTO;
 import dreamix.library.models.Users;
 import dreamix.library.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/all")
-    public List<Users> findAll() {
+    public List<UsersDTO> findAll() {
         return userService.findAll();
     }
 

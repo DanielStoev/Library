@@ -1,5 +1,6 @@
 package dreamix.library.controllers;
 
+import dreamix.library.dtos.BooksDTO;
 import dreamix.library.models.Books;
 import dreamix.library.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,23 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping("/all")
-    public List<Books> findAll() {
+    public List<BooksDTO> findAll() {
         return bookService.findAll();
+    }
+
+    @GetMapping("/find/{id}")
+    public BooksDTO findById(@PathVariable Integer id) {
+        return bookService.findById(id);
     }
 
     @PostMapping("/add")
     public Books create(@RequestBody Books book) {
         return bookService.create(book);
+    }
+
+    @GetMapping("/update/{id}")
+    public Books update(@PathVariable Integer id) {
+        return bookService.update();
     }
 
     @DeleteMapping("/delete/{id}")

@@ -20,8 +20,4 @@ public class Forms extends IdSubclass {
     @JsonManagedReference
     @OneToMany(mappedBy = "form")
     private List<Books> books;
-
-    public Forms(String form) {
-        this.form = form;
-    }
 }

@@ -1,6 +1,6 @@
 package dreamix.library.controllers;
 
-import dreamix.library.models.Authors;
+import dreamix.library.dtos.AuthorsDTO;
 import dreamix.library.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +15,17 @@ public class AuthorController {
     private AuthorService authorService;
 
     @GetMapping("/all")
-    public List<Authors> findAll() {
+    public List<AuthorsDTO> findAll() {
         return authorService.findAll();
     }
 
+    @GetMapping("/find/{id}")
+    public AuthorsDTO findById(@PathVariable Integer id) {
+        return authorService.findById(id);
+    }
+
     @PostMapping("/add")
-    public Authors create(@RequestBody Authors author) {
+    public AuthorsDTO create(AuthorsDTO author) {
         return authorService.create(author);
     }
 

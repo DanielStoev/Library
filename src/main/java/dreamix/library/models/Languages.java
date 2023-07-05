@@ -26,8 +26,4 @@ public class Languages extends IdSubclass {
             joinColumns = @JoinColumn(name = "languages_id"),
             inverseJoinColumns = @JoinColumn(name = "books_id"))
     private List<Books> books;
-
-    public Languages(String language) {
-        this.language = language;
-    }
 }

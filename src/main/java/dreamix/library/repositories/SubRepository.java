@@ -19,7 +19,6 @@ public abstract class SubRepository<T> {
 
     public abstract Class<T> getEntityClass();
 
-
     public List<T> findAll() {
         return entityManager.createQuery("from " + getEntityName()).getResultList();
     }
@@ -51,8 +50,7 @@ public abstract class SubRepository<T> {
     @Transactional
     public void delete(Integer id) {
         try {
-            String entityName = getEntityName();
-            String jpql = "delete from " + entityName;
+            String jpql = "delete from " + getEntityName();
             entityManager.createQuery(jpql + " where id = :id")
                     .setParameter("id", id)
                     .executeUpdate();

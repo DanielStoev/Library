@@ -20,9 +20,4 @@ public class Genres extends IdSubclass {
     @JsonManagedReference
     @ManyToMany(mappedBy = "genres")
     private List<Books> books;
-
-    public Genres(String genre) {
-        this.genre = genre;
-    }
-
 }
