@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping(value = "/authors", consumes = "application/json;charset=UTF-8")
 public class AuthorController {
 
     @Autowired
@@ -24,9 +24,15 @@ public class AuthorController {
         return authorService.findById(id);
     }
 
-    @PostMapping("/add")
-    public AuthorsDTO create(AuthorsDTO author) {
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
+    public AuthorsDTO create(@RequestBody AuthorsDTO author) {
         return authorService.create(author);
+    }
+
+    @PutMapping(value = "/update", produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
+    public AuthorsDTO update(@RequestBody AuthorsDTO author) {
+        return authorService.update(author);
     }
 
     @DeleteMapping("/delete/{id}")

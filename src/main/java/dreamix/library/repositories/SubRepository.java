@@ -1,6 +1,5 @@
 package dreamix.library.repositories;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -12,14 +11,15 @@ import java.util.List;
 public abstract class SubRepository<T> {
 
     @PersistenceContext
-    @Autowired
     private EntityManager entityManager;
+
 
     public abstract String getEntityName();
 
     public abstract Class<T> getEntityClass();
 
     public List<T> findAll() {
+
         return entityManager.createQuery("from " + getEntityName()).getResultList();
     }
 
@@ -30,12 +30,9 @@ public abstract class SubRepository<T> {
     }
 
     @Transactional
-    public void create(T object) {
-        try {
-            entityManager.persist(object);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public T create(T object) {
+        entityManager.persist(object);
+        return object;
     }
 
     @Transactional

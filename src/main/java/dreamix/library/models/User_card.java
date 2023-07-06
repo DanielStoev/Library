@@ -1,7 +1,5 @@
 package dreamix.library.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,11 +13,9 @@ import java.util.List;
 @Entity
 public class User_card extends IdSubclass {
 
-    @JsonBackReference
     @OneToOne
     private Users user;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "userCard")
     private List<Books> books;
 

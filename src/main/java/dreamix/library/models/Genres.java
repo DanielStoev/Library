@@ -1,6 +1,5 @@
 package dreamix.library.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,6 @@ public class Genres extends IdSubclass {
 
     private String genre;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "genres")
     private List<Books> books;
 }

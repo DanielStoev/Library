@@ -1,6 +1,5 @@
 package dreamix.library.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,6 @@ public class Forms extends IdSubclass {
 
     private String form;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "form")
     private List<Books> books;
 }

@@ -1,6 +1,5 @@
 package dreamix.library.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,6 @@ public class Languages extends IdSubclass {
 
     private String language;
 
-    @JsonBackReference
     @ManyToMany
     @JoinTable(
             name = "book_language",

@@ -16,3 +16,4 @@ public class AuthorsRepository extends SubRepository<Authors> {
         return Authors.class;
     }
 }
+
