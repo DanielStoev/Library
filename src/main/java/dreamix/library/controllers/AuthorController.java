@@ -25,13 +25,13 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
-    public AuthorsDTO create(@RequestBody AuthorsDTO author) {
-        return authorService.create(author);
+    public AuthorsDTO create(@RequestBody AuthorsDTO authorsDTO) {
+        return authorService.create(authorsDTO);
     }
 
     @PutMapping(value = "/update", produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
-    public AuthorsDTO update(@RequestBody AuthorsDTO author) {
-        return authorService.update(author);
+    public AuthorsDTO update(@RequestBody AuthorsDTO authorsDTO) {
+        return authorService.update(authorsDTO);
     }
 
     @DeleteMapping("/delete/{id}")

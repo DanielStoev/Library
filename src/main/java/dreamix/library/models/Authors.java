@@ -15,7 +15,7 @@ public class Authors extends IdSubclass {
 
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "author_id"),

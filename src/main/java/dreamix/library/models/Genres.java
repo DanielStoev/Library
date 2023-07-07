@@ -15,7 +15,7 @@ public class Genres extends IdSubclass {
 
     private String genre;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     @JoinTable(
             name = "book_genre",
             joinColumns = @JoinColumn(name = "genre_id"),
