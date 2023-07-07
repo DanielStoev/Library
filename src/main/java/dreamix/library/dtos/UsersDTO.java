@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class UsersDTO {
 
+    private Integer id;
+
     private String name;
 
     private User_card card;

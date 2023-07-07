@@ -24,7 +24,6 @@ public class AuthorController {
         return authorService.findById(id);
     }
 
-
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
     public AuthorsDTO create(@RequestBody AuthorsDTO author) {
         return authorService.create(author);

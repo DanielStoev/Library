@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data

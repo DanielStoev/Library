@@ -7,6 +7,8 @@ import java.util.List;
 @Data
 public class LanguagesDTO {
 
+    private Integer id;
+
     private String language;
 
     private List<BooksDTO> book;

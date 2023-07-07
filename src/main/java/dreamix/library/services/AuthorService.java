@@ -37,6 +37,9 @@ public class AuthorService {
     private Authors authorsENTer(AuthorsDTO authorsDTO) {
         Authors authors = new Authors();
         authors.setName(authorsDTO.getName());
+        if (authorsDTO.getId() != null) {
+            authors.setId(authorsDTO.getId());
+        }
 
         List<Books> books = new ArrayList<>();
         if (authorsDTO.getBooks() != null) {
@@ -137,17 +140,24 @@ public class AuthorService {
         Authors author = authorsENTer(authorDTO);
         if (author.getBooks() != null) {
             for (Books book : author.getBooks()) {
-                booksRepository.create(book);
+                if (book.getId() != null) {
+                    booksRepository.update(book);
+                } else {
+                    booksRepository.create(book);
+                }
             }
         }
-        authorsRepository.create(author);
+        if (author.getId() != null) {
+            authorsRepository.update(author);
+        } else {
+            authorsRepository.create(author);
+        }
         return authorDTO;
     }
 
     @Transactional
     public AuthorsDTO update(AuthorsDTO authorDTO) {
         Authors author = authorsENTer(authorDTO);
-        author.setId(authorDTO.getId());
         if (author.getBooks() != null) {
             for (Books book : author.getBooks()) {
                 booksRepository.update(book);
@@ -160,6 +170,4 @@ public class AuthorService {
     public void delete(Integer id) {
         authorsRepository.delete(id);
     }
-
-
 }

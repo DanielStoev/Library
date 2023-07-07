@@ -18,11 +18,7 @@ public class Books extends IdSubclass {
     @ManyToMany(mappedBy = "books")
     private List<Authors> authors;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_genre",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @ManyToMany(mappedBy = "books")
     private List<Genres> genres;
 
     @ManyToOne

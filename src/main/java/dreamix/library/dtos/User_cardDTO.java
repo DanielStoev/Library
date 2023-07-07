@@ -7,6 +7,8 @@ import java.util.List;
 @Data
 public class User_cardDTO {
 
+    private Integer id;
+
     private UsersDTO user;
 
     private List<BooksDTO> book;
