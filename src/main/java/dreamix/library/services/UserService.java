@@ -1,55 +1,84 @@
 package dreamix.library.services;
 
 import dreamix.library.dtos.UsersDTO;
+import dreamix.library.models.User_card;
 import dreamix.library.models.Users;
-import dreamix.library.repositories.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService extends SubService {
 
-    @Autowired
-    private UsersRepository usersRepository;
-
-    public List<UsersDTO> findAll() {
-        List<Users> users = usersRepository.findAll();
-        List<UsersDTO> usersDTOs = new ArrayList<>();
-
-        for (Users user : users) {
-            UsersDTO usersDTO = new UsersDTO();
-            usersDTO.setName(user.getName());
-            usersDTO.setCard(user.getCard());
-            usersDTOs.add(usersDTO);
-        }
-
-        return usersDTOs;
-    }
-
-    public UsersDTO findById(Integer id) {
-        Users user = (Users) usersRepository.findById(id);
+    private UsersDTO usersDTOer(Users users) {
         UsersDTO usersDTO = new UsersDTO();
-        usersDTO.setName(user.getName());
-        usersDTO.setCard(user.getCard());
+        usersDTO.setName(users.getName());
+        usersDTO.setId(users.getId());
+        usersDTO.setCard(users.getCard());
         return usersDTO;
     }
 
-    public Users create(Users user) {
-        usersRepository.create(user);
-        return user;
+    private Users usersENTer(UsersDTO usersDTO) {
+        Users users = new Users();
+        users.setName(usersDTO.getName());
+        users.setPassword(usersDTO.getPassword());
+        users.setCard(usersDTO.getCard());
+        if (usersDTO.getId() != null) {
+            users.setId(usersDTO.getId());
+        }
+
+        return users;
     }
 
-    public void update() {
-        Users users = new Users();
+    public List<UsersDTO> findAll() {
+        List<Users> users = usersRepository.findAll();
+        List<UsersDTO> usersDTOS = new ArrayList<>();
+
+        for (Users user : users) {
+            usersDTOS.add(usersDTOer(user));
+        }
+
+        return usersDTOS;
+    }
+
+    public UsersDTO findById(Integer id) {
+        Users users = (Users) usersRepository.findById(id);
+        return usersDTOer(users);
+    }
+
+    @Transactional
+    public UsersDTO create(UsersDTO usersDTO) {
+        Users users = usersENTer(usersDTO);
+        if (users.getCard() != null) {
+            User_card userCard = users.getCard();
+            if (userCard.getId() != null) {
+                userCardRepository.update(userCard);
+            } else {
+                userCardRepository.create(userCard);
+            }
+        }
+        if (users.getId() != null) {
+            usersRepository.update(users);
+        } else {
+            usersRepository.create(users);
+        }
+        return usersDTO;
+    }
+
+    @Transactional
+    public UsersDTO update(UsersDTO usersDTO) {
+        Users users = usersENTer(usersDTO);
+        if (users.getCard() != null) {
+            User_card userCard = users.getCard();
+            userCardRepository.update(userCard);
+        }
         usersRepository.update(users);
+        return usersDTO;
     }
 
     public void delete(Integer id) {
-        usersRepository.delete(id);
+        copiesRepository.delete(id);
     }
 }
-
-

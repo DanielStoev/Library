@@ -1,5 +1,6 @@
 package dreamix.library.repositories;
 
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@EnableJpaRepositories
 public abstract class SubRepository<T> {
 
     @PersistenceContext
@@ -19,7 +21,6 @@ public abstract class SubRepository<T> {
     public abstract Class<T> getEntityClass();
 
     public List<T> findAll() {
-
         return entityManager.createQuery("from " + getEntityName()).getResultList();
     }
 

@@ -1,6 +1,6 @@
 package dreamix.library.controllers;
 
-import dreamix.library.models.User_card;
+import dreamix.library.dtos.User_cardDTO;
 import dreamix.library.services.User_cardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +15,23 @@ public class User_cardController {
     private User_cardService userCardService;
 
     @GetMapping("/all")
-    public List<User_card> findAll() {
+    public List<User_cardDTO> findAll() {
         return userCardService.findAll();
     }
 
-    @PostMapping("/add")
-    public User_card create(@RequestBody User_card userCard) {
-        return userCardService.create(userCard);
+    @GetMapping("/find/{id}")
+    public User_cardDTO findById(@PathVariable Integer id) {
+        return userCardService.findById(id);
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
+    public User_cardDTO create(@RequestBody User_cardDTO userCardDTO) {
+        return userCardService.create(userCardDTO);
+    }
+
+    @PutMapping(value = "/update", produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
+    public User_cardDTO update(@RequestBody User_cardDTO userCardDTO) {
+        return userCardService.update(userCardDTO);
     }
 
     @DeleteMapping("/delete/{id}")

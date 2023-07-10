@@ -1,9 +1,7 @@
 package dreamix.library.services;
 
 import dreamix.library.dtos.BooksDTO;
-import dreamix.library.models.Books;
-import dreamix.library.repositories.BooksRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import dreamix.library.models.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,10 +10,6 @@ import java.util.List;
 
 @Service
 public class BookService extends SubService {
-
-    SubService subService = new SubService();
-    @Autowired
-    private BooksRepository booksRepository;
 
     public List<BooksDTO> findAll() {
         List<Books> books = booksRepository.findAll();
@@ -34,15 +28,70 @@ public class BookService extends SubService {
 
     @Transactional
     public BooksDTO create(BooksDTO booksDTO) {
-        Books books = SubService.mapToEntity(booksDTO);
-        subService.saver(books);
+        Books book = mapToEntity(booksDTO);
+        if (book.getLanguages() != null) {
+            for (Languages languages : book.getLanguages()) {
+                if (languages.getId() != null) {
+                    languagesRepository.update(languages);
+                } else {
+                    languagesRepository.create(languages);
+                }
+            }
+        }
+        if (book.getUserCard() != null) {
+            User_card userCard = book.getUserCard();
+            if (userCard.getId() != null) {
+                userCardRepository.update(userCard);
+            } else {
+                userCardRepository.create(userCard);
+            }
+        }
+        if (book.getForm() != null) {
+            Forms forms = book.getForm();
+            if (forms.getId() != null) {
+                formsRepository.update(forms);
+            } else {
+                formsRepository.create(forms);
+            }
+        }
+        if (book.getCopies() != null) {
+            for (Copies copies : book.getCopies()) {
+                if (copies.getId() != null) {
+                    copiesRepository.update(copies);
+                } else {
+                    copiesRepository.create(copies);
+                }
+            }
+        }
+        if (book.getId() != null) {
+            booksRepository.update(book);
+        } else {
+            booksRepository.create(book);
+        }
+        if (book.getAuthors() != null) {
+            for (Authors authors : book.getAuthors()) {
+                if (authors.getId() != null) {
+                    authorsRepository.update(authors);
+                } else {
+                    authorsRepository.create(authors);
+                }
+            }
+        }
+        if (book.getGenres() != null) {
+            for (Genres genres : book.getGenres()) {
+                if (genres.getId() != null) {
+                    genresRepository.update(genres);
+                } else {
+                    genresRepository.create(genres);
+                }
+            }
+        }
         return booksDTO;
     }
 
     @Transactional
     public BooksDTO update(BooksDTO booksDTO) {
-        Books books = SubService.mapToEntity(booksDTO);
-        subService.saver(books);
+        Books book = mapToEntity(booksDTO);
         return booksDTO;
     }
 
@@ -50,5 +99,3 @@ public class BookService extends SubService {
         booksRepository.delete(id);
     }
 }
-
-

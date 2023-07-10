@@ -4,34 +4,36 @@ import dreamix.library.dtos.*;
 import dreamix.library.models.*;
 import dreamix.library.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubService {
+public abstract class SubService {
 
     @Autowired
-    private BooksRepository booksRepository;
+    public BooksRepository booksRepository;
 
     @Autowired
-    private AuthorsRepository authorsRepository;
+    public AuthorsRepository authorsRepository;
 
     @Autowired
-    private GenresRepository genresRepository;
+    public GenresRepository genresRepository;
 
     @Autowired
-    private LanguagesRepository languagesRepository;
+    public LanguagesRepository languagesRepository;
 
     @Autowired
-    private User_cardRepository userCardRepository;
+    public User_cardRepository userCardRepository;
 
     @Autowired
-    private FormsRepository formsRepository;
+    public FormsRepository formsRepository;
 
     @Autowired
-    private CopiesRepository copiesRepository;
+    public CopiesRepository copiesRepository;
+
+    @Autowired
+    public UsersRepository usersRepository;
 
     public static Books mapToEntity(BooksDTO booksDTO) {
         Books book = new Books();
@@ -179,11 +181,6 @@ public class SubService {
 
     @Transactional
     public void saver(Books book) {
-        if (book.getId() != null) {
-            booksRepository.update(book);
-        } else {
-            booksRepository.create(book);
-        }
         if (book.getAuthors() != null) {
             for (Authors authors : book.getAuthors()) {
                 if (authors.getId() != null) {
@@ -235,6 +232,11 @@ public class SubService {
                     copiesRepository.create(copies);
                 }
             }
+        }
+        if (book.getId() != null) {
+            booksRepository.update(book);
+        } else {
+            booksRepository.create(book);
         }
     }
 }

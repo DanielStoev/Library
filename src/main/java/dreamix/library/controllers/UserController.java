@@ -1,7 +1,7 @@
 package dreamix.library.controllers;
 
+
 import dreamix.library.dtos.UsersDTO;
-import dreamix.library.models.Users;
 import dreamix.library.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +20,19 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping("/add")
-    public Users create(@RequestBody Users user) {
-        return userService.create(user);
+    @GetMapping("/find/{id}")
+    public UsersDTO findById(@PathVariable Integer id) {
+        return userService.findById(id);
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
+    public UsersDTO create(@RequestBody UsersDTO usersDTO) {
+        return userService.create(usersDTO);
+    }
+
+    @PutMapping(value = "/update", produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
+    public UsersDTO update(@RequestBody UsersDTO usersDTO) {
+        return userService.update(usersDTO);
     }
 
     @DeleteMapping("/delete/{id}")

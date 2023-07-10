@@ -11,5 +11,5 @@ public class LanguagesDTO {
 
     private String language;
 
-    private List<BooksDTO> book;
+    private List<BooksDTO> books;
 }

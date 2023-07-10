@@ -2,9 +2,6 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.*;
 import dreamix.library.models.*;
-import dreamix.library.repositories.AuthorsRepository;
-import dreamix.library.repositories.BooksRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,11 +10,6 @@ import java.util.List;
 
 @Service
 public class AuthorService extends SubService {
-
-    @Autowired
-    private AuthorsRepository authorsRepository;
-    @Autowired
-    private BooksRepository booksRepository;
 
     private AuthorsDTO authorsDTOer(Authors author) {
         AuthorsDTO authorsDTO = new AuthorsDTO();

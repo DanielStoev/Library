@@ -1,10 +1,9 @@
 package dreamix.library.services;
 
-import dreamix.library.dtos.*;
-import dreamix.library.models.*;
-import dreamix.library.repositories.BooksRepository;
-import dreamix.library.repositories.GenresRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import dreamix.library.dtos.BooksDTO;
+import dreamix.library.dtos.GenresDTO;
+import dreamix.library.models.Books;
+import dreamix.library.models.Genres;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,13 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GenreService {
-
-    @Autowired
-    private GenresRepository genresRepository;
-    @Autowired
-    private BooksRepository booksRepository;
-
+public class GenreService extends SubService {
     private GenresDTO genresDTOer(Genres genres) {
         GenresDTO genresDTO = new GenresDTO();
         genresDTO.setGenre(genres.getGenre());
