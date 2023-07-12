@@ -1,4 +1,4 @@
-package dreamix.library.services;
+package dreamix.library.services.reusables;
 
 import dreamix.library.dtos.*;
 import dreamix.library.models.*;
@@ -19,7 +19,7 @@ public abstract class SubService {
 
     @Autowired
     public GenresRepository genresRepository;
-
+    
     @Autowired
     public LanguagesRepository languagesRepository;
 
@@ -35,22 +35,15 @@ public abstract class SubService {
     @Autowired
     public UsersRepository usersRepository;
 
+
     public static Books mapToEntity(BooksDTO booksDTO) {
         Books book = new Books();
         if (booksDTO.getId() != null) {
             book.setId(booksDTO.getId());
         }
 
-        // Authors
         if (booksDTO.getAuthors() != null) {
-            List<Authors> bookAuthors = new ArrayList<>();
-            for (AuthorsDTO authorDTO : booksDTO.getAuthors()) {
-                Authors author = new Authors();
-                author.setName(authorDTO.getName());
-                author.setId(authorDTO.getId());
-                bookAuthors.add(author);
-            }
-            book.setAuthors(bookAuthors);
+            authorsAddToBook(booksDTO, book);
         }
 
         // Title
@@ -60,21 +53,12 @@ public abstract class SubService {
 
         // Genres
         if (booksDTO.getGenres() != null) {
-            List<Genres> bookGenres = new ArrayList<>();
-            for (GenresDTO genreDTO : booksDTO.getGenres()) {
-                Genres genres = new Genres();
-                genres.setGenre(genreDTO.getGenre());
-                bookGenres.add(genres);
-            }
-            book.setGenres(bookGenres);
+            genresAddToBook(booksDTO, book);
         }
 
         // Form
         if (booksDTO.getForm() != null) {
-            FormsDTO formsDTO = booksDTO.getForm();
-            Forms bookForms = new Forms();
-            bookForms.setForm(formsDTO.getForm());
-            book.setForm(bookForms);
+            formsAddToBook(booksDTO, book);
         }
 
         // Year
@@ -84,27 +68,63 @@ public abstract class SubService {
 
         // Copies
         if (booksDTO.getCopies() != null) {
-            List<Copies> bookCopies = new ArrayList<>();
-            for (CopiesDTO copyDTO : booksDTO.getCopies()) {
-                Copies copies = new Copies();
-                copies.setCopy_number(copyDTO.getCopy_number());
-                bookCopies.add(copies);
-            }
-            book.setCopies(bookCopies);
+            copiesAddToBook(booksDTO, book);
         }
 
         // Languages
         if (booksDTO.getLanguages() != null) {
-            List<Languages> bookLanguages = new ArrayList<>();
-            for (LanguagesDTO langDTO : booksDTO.getLanguages()) {
-                Languages languages = new Languages();
-                languages.setLanguage(langDTO.getLanguage());
-                bookLanguages.add(languages);
-            }
-            book.setLanguages(bookLanguages);
+            languagesAddToBook(booksDTO, book);
         }
 
         return book;
+    }
+
+    private static void languagesAddToBook(BooksDTO booksDTO, Books book) {
+        List<Languages> bookLanguages = new ArrayList<>();
+        for (LanguagesDTO langDTO : booksDTO.getLanguages()) {
+            Languages languages = new Languages();
+            languages.setLanguage(langDTO.getLanguage());
+            bookLanguages.add(languages);
+        }
+        book.setLanguages(bookLanguages);
+    }
+
+    private static void copiesAddToBook(BooksDTO booksDTO, Books book) {
+        List<Copies> bookCopies = new ArrayList<>();
+        for (CopiesDTO copyDTO : booksDTO.getCopies()) {
+            Copies copies = new Copies();
+            copies.setCopy_number(copyDTO.getCopy_number());
+            bookCopies.add(copies);
+        }
+        book.setCopies(bookCopies);
+    }
+
+    private static void formsAddToBook(BooksDTO booksDTO, Books book) {
+        FormsDTO formsDTO = booksDTO.getForm();
+        Forms bookForms = new Forms();
+        bookForms.setForm(formsDTO.getForm());
+        book.setForm(bookForms);
+    }
+
+    private static void genresAddToBook(BooksDTO booksDTO, Books book) {
+        List<Genres> bookGenres = new ArrayList<>();
+        for (GenresDTO genreDTO : booksDTO.getGenres()) {
+            Genres genres = new Genres();
+            genres.setGenre(genreDTO.getGenre());
+            bookGenres.add(genres);
+        }
+        book.setGenres(bookGenres);
+    }
+
+    private static void authorsAddToBook(BooksDTO booksDTO, Books book) {
+        List<Authors> bookAuthors = new ArrayList<>();
+        for (AuthorsDTO authorDTO : booksDTO.getAuthors()) {
+            Authors author = new Authors();
+            author.setName(authorDTO.getName());
+            author.setId(authorDTO.getId());
+            bookAuthors.add(author);
+        }
+        book.setAuthors(bookAuthors);
     }
 
     public static BooksDTO mapToDTO(Books book) {
@@ -114,69 +134,82 @@ public abstract class SubService {
             booksDTO.setId(book.getId());
         }
 
-        //Authors
         if (book.getAuthors() != null) {
-            List<AuthorsDTO> bookAuthors = new ArrayList<>();
-            for (Authors author : book.getAuthors()) {
-                AuthorsDTO authorsDTO = new AuthorsDTO();
-                authorsDTO.setName(author.getName());
-                bookAuthors.add(authorsDTO);
-            }
-            booksDTO.setAuthors(bookAuthors);
+            authorsAddToBookDTO(book, booksDTO);
         }
 
-        //Tittle
         if (book.getTitle() != null) {
             booksDTO.setTitle(book.getTitle());
         }
 
-        //Genres
         if (book.getGenres() != null) {
-            List<GenresDTO> bookGenres = new ArrayList<>();
-            for (Genres genre : book.getGenres()) {
-                GenresDTO genresDTO = new GenresDTO();
-                genresDTO.setGenre(genre.getGenre());
-                bookGenres.add(genresDTO);
-            }
-            booksDTO.setGenres(bookGenres);
+            genresAddToBookDTO(book, booksDTO);
         }
 
-        //Form
         if (book.getForm() != null) {
-            Forms form = book.getForm();
-            FormsDTO bookForms = new FormsDTO();
-            bookForms.setForm(form.getForm());
-            booksDTO.setForm(bookForms);
+            formAddToBookDTO(book, booksDTO);
         }
 
-        //Year
         if (book.getYear() != null) {
             booksDTO.setYear(book.getYear());
         }
 
-        //Copies
         if (book.getCopies() != null) {
-            List<CopiesDTO> bookCopies = new ArrayList<>();
-            for (Copies copy : book.getCopies()) {
-                CopiesDTO copiesDTO = new CopiesDTO();
-                copiesDTO.setCopy_number(copy.getCopy_number());
-                bookCopies.add(copiesDTO);
-            }
-            booksDTO.setCopies(bookCopies);
+            copiesAddToBookDTO(book, booksDTO);
         }
 
-        //Languages
         if (book.getLanguages() != null) {
-            List<LanguagesDTO> bookLanguages = new ArrayList<>();
-            for (Languages lang : book.getLanguages()) {
-                LanguagesDTO languagesDTO = new LanguagesDTO();
-                languagesDTO.setLanguage(lang.getLanguage());
-                bookLanguages.add(languagesDTO);
-            }
-            booksDTO.setLanguages(bookLanguages);
+            languagesAddToBookDTO(book, booksDTO);
         }
 
         return booksDTO;
+    }
+
+    private static void languagesAddToBookDTO(Books book, BooksDTO booksDTO) {
+        List<LanguagesDTO> bookLanguages = new ArrayList<>();
+        for (Languages lang : book.getLanguages()) {
+            LanguagesDTO languagesDTO = new LanguagesDTO();
+            languagesDTO.setLanguage(lang.getLanguage());
+            bookLanguages.add(languagesDTO);
+        }
+        booksDTO.setLanguages(bookLanguages);
+    }
+
+    private static void copiesAddToBookDTO(Books book, BooksDTO booksDTO) {
+        List<CopiesDTO> bookCopies = new ArrayList<>();
+        for (Copies copy : book.getCopies()) {
+            CopiesDTO copiesDTO = new CopiesDTO();
+            copiesDTO.setCopy_number(copy.getCopy_number());
+            bookCopies.add(copiesDTO);
+        }
+        booksDTO.setCopies(bookCopies);
+    }
+
+    private static void formAddToBookDTO(Books book, BooksDTO booksDTO) {
+        Forms form = book.getForm();
+        FormsDTO bookForms = new FormsDTO();
+        bookForms.setForm(form.getForm());
+        booksDTO.setForm(bookForms);
+    }
+
+    private static void genresAddToBookDTO(Books book, BooksDTO booksDTO) {
+        List<GenresDTO> bookGenres = new ArrayList<>();
+        for (Genres genre : book.getGenres()) {
+            GenresDTO genresDTO = new GenresDTO();
+            genresDTO.setGenre(genre.getGenre());
+            bookGenres.add(genresDTO);
+        }
+        booksDTO.setGenres(bookGenres);
+    }
+
+    private static void authorsAddToBookDTO(Books book, BooksDTO booksDTO) {
+        List<AuthorsDTO> bookAuthors = new ArrayList<>();
+        for (Authors author : book.getAuthors()) {
+            AuthorsDTO authorsDTO = new AuthorsDTO();
+            authorsDTO.setName(author.getName());
+            bookAuthors.add(authorsDTO);
+        }
+        booksDTO.setAuthors(bookAuthors);
     }
 
     @Transactional

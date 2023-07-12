@@ -4,6 +4,8 @@ import dreamix.library.dtos.BooksDTO;
 import dreamix.library.dtos.CopiesDTO;
 import dreamix.library.models.Books;
 import dreamix.library.models.Copies;
+import dreamix.library.services.reusables.BookChecker;
+import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CopyService extends SubService {
+public class CopyService extends BookChecker {
 
     private CopiesDTO copiesDTOer(Copies copies) {
         CopiesDTO copiesDTO = new CopiesDTO();
@@ -61,12 +63,7 @@ public class CopyService extends SubService {
     public CopiesDTO create(CopiesDTO copiesDTO) {
         Copies copies = copiesENTer(copiesDTO);
         if (copies.getBook() != null) {
-            Books books = copies.getBook();
-            if (books.getId() != null) {
-                booksRepository.update(books);
-            } else {
-                booksRepository.create(books);
-            }
+            bookCheckSingle(copies.getBook());
         }
         if (copies.getId() != null) {
             copiesRepository.update(copies);

@@ -2,6 +2,8 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.*;
 import dreamix.library.models.*;
+import dreamix.library.services.reusables.BookChecker;
+import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AuthorService extends SubService {
+public class AuthorService extends BookChecker {
 
     private AuthorsDTO authorsDTOer(Authors author) {
         AuthorsDTO authorsDTO = new AuthorsDTO();
@@ -64,13 +66,7 @@ public class AuthorService extends SubService {
     public AuthorsDTO create(AuthorsDTO authorDTO) {
         Authors author = authorsENTer(authorDTO);
         if (author.getBooks() != null) {
-            for (Books book : author.getBooks()) {
-                if (book.getId() != null) {
-                    booksRepository.update(book);
-                } else {
-                    booksRepository.create(book);
-                }
-            }
+            bookCheckMultiple(author.getBooks());
         }
         if (author.getId() != null) {
             authorsRepository.update(author);

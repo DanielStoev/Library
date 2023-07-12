@@ -4,6 +4,8 @@ import dreamix.library.dtos.BooksDTO;
 import dreamix.library.dtos.FormsDTO;
 import dreamix.library.models.Books;
 import dreamix.library.models.Forms;
+import dreamix.library.services.reusables.BookChecker;
+import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FormService extends SubService {
+public class FormService extends BookChecker {
 
     private FormsDTO formsDTOer(Forms forms) {
         FormsDTO formsDTO = new FormsDTO();
@@ -66,13 +68,7 @@ public class FormService extends SubService {
     public FormsDTO create(FormsDTO formsDTO) {
         Forms forms = formsENTer(formsDTO);
         if (forms.getBooks() != null) {
-            for (Books book : forms.getBooks()) {
-                if (book.getId() != null) {
-                    booksRepository.update(book);
-                } else {
-                    booksRepository.create(book);
-                }
-            }
+            bookCheckMultiple(forms.getBooks());
         }
         if (forms.getId() != null) {
             formsRepository.update(forms);

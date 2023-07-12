@@ -4,6 +4,8 @@ import dreamix.library.dtos.BooksDTO;
 import dreamix.library.dtos.GenresDTO;
 import dreamix.library.models.Books;
 import dreamix.library.models.Genres;
+import dreamix.library.services.reusables.BookChecker;
+import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GenreService extends SubService {
+public class GenreService extends BookChecker {
     private GenresDTO genresDTOer(Genres genres) {
         GenresDTO genresDTO = new GenresDTO();
         genresDTO.setGenre(genres.getGenre());
@@ -65,13 +67,7 @@ public class GenreService extends SubService {
     public GenresDTO create(GenresDTO genresDTO) {
         Genres genres = genresENTer(genresDTO);
         if (genres.getBooks() != null) {
-            for (Books book : genres.getBooks()) {
-                if (book.getId() != null) {
-                    booksRepository.update(book);
-                } else {
-                    booksRepository.create(book);
-                }
-            }
+            bookCheckMultiple(genres.getBooks());
         }
         if (genres.getId() != null) {
             genresRepository.update(genres);

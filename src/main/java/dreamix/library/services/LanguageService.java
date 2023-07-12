@@ -4,6 +4,8 @@ import dreamix.library.dtos.BooksDTO;
 import dreamix.library.dtos.LanguagesDTO;
 import dreamix.library.models.Books;
 import dreamix.library.models.Languages;
+import dreamix.library.services.reusables.BookChecker;
+import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LanguageService extends SubService {
+public class LanguageService extends BookChecker {
     private LanguagesDTO genresDTOer(Languages language) {
         LanguagesDTO languagesDTO = new LanguagesDTO();
         languagesDTO.setLanguage(language.getLanguage());
@@ -65,13 +67,7 @@ public class LanguageService extends SubService {
     public LanguagesDTO create(LanguagesDTO languagesDTO) {
         Languages languages = genresENTer(languagesDTO);
         if (languages.getBooks() != null) {
-            for (Books book : languages.getBooks()) {
-                if (book.getId() != null) {
-                    booksRepository.update(book);
-                } else {
-                    booksRepository.create(book);
-                }
-            }
+            bookCheckMultiple(languages.getBooks());
         }
         if (languages.getId() != null) {
             languagesRepository.update(languages);

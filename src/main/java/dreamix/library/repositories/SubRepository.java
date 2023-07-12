@@ -1,11 +1,14 @@
 package dreamix.library.repositories;
 
+import dreamix.library.models.IdSubclass;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.FieldResult;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Repository
@@ -37,7 +40,21 @@ public abstract class SubRepository<T> {
     }
 
     @Transactional
-    public void update(T object) {
+    public <T extends IdSubclass> void update(T object) {
+        try {
+            Integer id = object.getId();
+            Object foundObject = findById(id);
+            Field[] fields = object.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                Object value = field.get(foundObject);
+                if (value != null && field.get(object) == null) {
+                    field.set(object, value);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
         try {
             entityManager.merge(object);
         } catch (Exception e) {

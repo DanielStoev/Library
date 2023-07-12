@@ -2,6 +2,7 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.BooksDTO;
 import dreamix.library.models.*;
+import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +25,15 @@ public class BookService extends SubService {
     public BooksDTO findById(Integer id) {
         Books books = (Books) booksRepository.findById(id);
         return SubService.mapToDTO(books);
+    }
+
+    public List<BooksDTO> findBooksByAuthors(String authorName) {
+        List<BooksDTO> booksDTO = new ArrayList<>();
+        List<Books> books = booksRepository.findBooksByAuthor(authorName);
+        for (Books book : books) {
+            booksDTO.add(SubService.mapToDTO(book));
+        }
+        return booksDTO;
     }
 
     @Transactional
@@ -92,6 +102,7 @@ public class BookService extends SubService {
     @Transactional
     public BooksDTO update(BooksDTO booksDTO) {
         Books book = mapToEntity(booksDTO);
+        booksRepository.update(book);
         return booksDTO;
     }
 

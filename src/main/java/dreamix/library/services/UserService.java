@@ -3,6 +3,8 @@ package dreamix.library.services;
 import dreamix.library.dtos.UsersDTO;
 import dreamix.library.models.User_card;
 import dreamix.library.models.Users;
+import dreamix.library.services.reusables.BookChecker;
+import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService extends SubService {
+public class UserService extends BookChecker {
 
     private UsersDTO usersDTOer(Users users) {
         UsersDTO usersDTO = new UsersDTO();
         usersDTO.setName(users.getName());
         usersDTO.setId(users.getId());
-        usersDTO.setCard(users.getCard());
+//        usersDTO.setCard(users.getCard());
         return usersDTO;
     }
 
@@ -24,7 +26,7 @@ public class UserService extends SubService {
         Users users = new Users();
         users.setName(usersDTO.getName());
         users.setPassword(usersDTO.getPassword());
-        users.setCard(usersDTO.getCard());
+//        users.setCard(usersDTO.getCard());
         if (usersDTO.getId() != null) {
             users.setId(usersDTO.getId());
         }
