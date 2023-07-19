@@ -1,6 +1,7 @@
 package dreamix.library.controllers;
 
 import dreamix.library.dtos.BooksDTO;
+import dreamix.library.repositories.Filter;
 import dreamix.library.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +25,6 @@ public class BookController {
         return bookService.findById(id);
     }
 
-    @GetMapping("/findByAuthor/{author}")
-    public List<BooksDTO> findAuthors(@PathVariable String author) {
-        return bookService.findBooksByAuthors(author);
-    }
-
-    @GetMapping("/findByBookTitle/{title}")
-    public List<BooksDTO> findBooksByName(@PathVariable String title) {
-        return bookService.findBooksByName(title);
-    }
-
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
     public BooksDTO create(@RequestBody BooksDTO booksDTO) {
         return bookService.create(booksDTO);
@@ -42,6 +33,11 @@ public class BookController {
     @PutMapping(value = "/update", produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
     public BooksDTO update(@RequestBody BooksDTO booksDTO) {
         return bookService.update(booksDTO);
+    }
+
+    @GetMapping(value = "filter")
+    public List<BooksDTO> filter(@RequestBody List<Filter> filters) {
+        return bookService.filter(filters);
     }
 
     @DeleteMapping("/delete/{id}")

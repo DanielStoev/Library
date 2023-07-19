@@ -3,6 +3,7 @@ package dreamix.library.dtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 

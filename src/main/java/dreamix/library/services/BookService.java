@@ -2,6 +2,7 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.BooksDTO;
 import dreamix.library.models.*;
+import dreamix.library.repositories.Filter;
 import dreamix.library.services.reusables.SubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,16 +40,21 @@ public class BookService extends SubService {
 
     public List<BooksDTO> findBooksByAuthors(String authorName) {
         List<BooksDTO> booksDTO = new ArrayList<>();
-        List<Books> books = booksRepository.findBooksByAuthor(authorName);
+        Filter filter = new Filter();
+        filter.setName(authorName);
+        filter.setOperator(this.getClass().getSimpleName());
+        List<Filter> filters = new ArrayList<>();
+        filters.add(filter);
+        List<Books> books = booksRepository.filter(filters);
         for (Books book : books) {
             booksDTO.add(SubService.mapToDTO(book));
         }
         return booksDTO;
     }
 
-    public List<BooksDTO> findBooksByName(String title) {
+    public List<BooksDTO> filter(List<Filter> filter) {
         List<BooksDTO> booksDTO = new ArrayList<>();
-        List<Books> books = booksRepository.findBooksByName(title);
+        List<Books> books = booksRepository.filter(filter);
         for (Books book : books) {
             booksDTO.add(SubService.mapToDTO(book));
         }
