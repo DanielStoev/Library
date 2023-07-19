@@ -2,7 +2,7 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.*;
 import dreamix.library.models.*;
-import dreamix.library.repositories.AuthorsRepository;
+import dreamix.library.repositories.Filter;
 import dreamix.library.services.reusables.BookChecker;
 import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
@@ -48,11 +48,11 @@ public class AuthorService extends BookChecker {
     }
 
     public List<AuthorsDTO> findAll() {
-        List<Authors> authors = authorsRepository.findAll();
+        List authors = authorsRepository.findAll();
         List<AuthorsDTO> authorsDTOs = new ArrayList<>();
 
-        for (Authors author : authors) {
-            authorsDTOs.add(authorsDTOer(author));
+        for (Object author : authors) {
+            authorsDTOs.add(authorsDTOer((Authors) author));
         }
 
         return authorsDTOs;
@@ -61,6 +61,15 @@ public class AuthorService extends BookChecker {
     public AuthorsDTO findById(Integer id) {
         Authors author = (Authors) authorsRepository.findById(id);
         return authorsDTOer(author);
+    }
+
+    public List<AuthorsDTO> filter(List<Filter> filter) {
+        List<AuthorsDTO> authorsDTOS = new ArrayList<>();
+        List<Authors> authors = authorsRepository.filter(filter);
+        for (Authors author : authors) {
+            authorsDTOS.add(authorsDTOer(author));
+        }
+        return authorsDTOS;
     }
 
     @Transactional
@@ -85,7 +94,6 @@ public class AuthorService extends BookChecker {
             authorsRepository.create(author);
         }
     }
-
 
     @Transactional
     public AuthorsDTO update(AuthorsDTO authorDTO) {

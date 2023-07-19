@@ -57,11 +57,11 @@ public class User_cardService extends BookChecker {
     }
 
     public List<User_cardDTO> findAll() {
-        List<User_card> userCards = userCardRepository.findAll();
+        List userCards = userCardRepository.findAll();
         List<User_cardDTO> userCardDTOS = new ArrayList<>();
 
-        for (User_card userCard : userCards) {
-            userCardDTOS.add(UserCardDTOer(userCard));
+        for (Object userCard : userCards) {
+            userCardDTOS.add(UserCardDTOer((User_card) userCard));
         }
 
         return userCardDTOS;

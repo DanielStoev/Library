@@ -28,7 +28,7 @@ public abstract class SubRepository<T> {
 
     public abstract Class<T> getEntityClass();
 
-    public List<T> findAll() {
+    public List findAll() {
         return entityManager.createQuery("from " + getEntityName()).getResultList();
     }
 
@@ -80,7 +80,7 @@ public abstract class SubRepository<T> {
     }
 
     @Transactional
-    public <T extends IdSubclass> void update(T object) {
+    public <P extends IdSubclass> void update(P object) {
         try {
             Integer id = object.getId();
             Object foundObject = findById(id);

@@ -1,8 +1,8 @@
 package dreamix.library.controllers;
 
 import dreamix.library.dtos.AuthorsDTO;
+import dreamix.library.repositories.Filter;
 import dreamix.library.services.AuthorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +11,11 @@ import java.util.List;
 @RequestMapping(value = "/authors", consumes = "application/json;charset=UTF-8")
 public class AuthorController {
 
-    @Autowired
     public AuthorService authorService;
+
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @GetMapping("/all")
     public List<AuthorsDTO> findAll() {
@@ -22,6 +25,11 @@ public class AuthorController {
     @GetMapping("/find/{id}")
     public AuthorsDTO findById(@PathVariable Integer id) {
         return authorService.findById(id);
+    }
+
+    @GetMapping(value = "filter")
+    public List<AuthorsDTO> filter(@RequestBody List<Filter> filters) {
+        return authorService.filter(filters);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")

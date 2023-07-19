@@ -49,11 +49,11 @@ public class FormService extends BookChecker {
     }
 
     public List<FormsDTO> findAll() {
-        List<Forms> forms = formsRepository.findAll();
+        List forms = formsRepository.findAll();
         List<FormsDTO> formsDTO = new ArrayList<>();
 
-        for (Forms form : forms) {
-            formsDTO.add(formsDTOer(form));
+        for (Object form : forms) {
+            formsDTO.add(formsDTOer((Forms) form));
         }
 
         return formsDTO;

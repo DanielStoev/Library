@@ -24,11 +24,11 @@ public class BookService extends SubService {
     LanguageService languageService;
 
     public List<BooksDTO> findAll() {
-        List<Books> books = booksRepository.findAll();
+        List books = booksRepository.findAll();
         List<BooksDTO> booksDTOs = new ArrayList<>();
 
-        for (Books book : books) {
-            booksDTOs.add(SubService.mapToDTO(book));
+        for (Object book : books) {
+            booksDTOs.add(SubService.mapToDTO((Books) book));
         }
         return booksDTOs;
     }
@@ -36,20 +36,6 @@ public class BookService extends SubService {
     public BooksDTO findById(Integer id) {
         Books books = (Books) booksRepository.findById(id);
         return SubService.mapToDTO(books);
-    }
-
-    public List<BooksDTO> findBooksByAuthors(String authorName) {
-        List<BooksDTO> booksDTO = new ArrayList<>();
-        Filter filter = new Filter();
-        filter.setName(authorName);
-        filter.setOperator(this.getClass().getSimpleName());
-        List<Filter> filters = new ArrayList<>();
-        filters.add(filter);
-        List<Books> books = booksRepository.filter(filters);
-        for (Books book : books) {
-            booksDTO.add(SubService.mapToDTO(book));
-        }
-        return booksDTO;
     }
 
     public List<BooksDTO> filter(List<Filter> filter) {

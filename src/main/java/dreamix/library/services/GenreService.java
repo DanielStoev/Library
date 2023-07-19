@@ -48,11 +48,11 @@ public class GenreService extends BookChecker {
     }
 
     public List<GenresDTO> findAll() {
-        List<Genres> genres = genresRepository.findAll();
+        List genres = genresRepository.findAll();
         List<GenresDTO> genresDTOS = new ArrayList<>();
 
-        for (Genres genre : genres) {
-            genresDTOS.add(genresDTOer(genre));
+        for (Object genre : genres) {
+            genresDTOS.add(genresDTOer((Genres) genre));
         }
 
         return genresDTOS;

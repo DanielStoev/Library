@@ -44,11 +44,11 @@ public class CopyService extends BookChecker {
     }
 
     public List<CopiesDTO> findAll() {
-        List<Copies> copy = copiesRepository.findAll();
+        List copy = copiesRepository.findAll();
         List<CopiesDTO> copiesDTOS = new ArrayList<>();
 
-        for (Copies copies : copy) {
-            copiesDTOS.add(copiesDTOer(copies));
+        for (Object copies : copy) {
+            copiesDTOS.add(copiesDTOer((Copies) copies));
         }
 
         return copiesDTOS;

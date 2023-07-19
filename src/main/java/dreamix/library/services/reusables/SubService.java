@@ -3,10 +3,8 @@ package dreamix.library.services.reusables;
 import dreamix.library.dtos.*;
 import dreamix.library.models.*;
 import dreamix.library.repositories.*;
-import dreamix.library.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -4,7 +4,6 @@ import dreamix.library.dtos.UsersDTO;
 import dreamix.library.models.User_card;
 import dreamix.library.models.Users;
 import dreamix.library.services.reusables.BookChecker;
-import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,11 +34,11 @@ public class UserService extends BookChecker {
     }
 
     public List<UsersDTO> findAll() {
-        List<Users> users = usersRepository.findAll();
+        List users = usersRepository.findAll();
         List<UsersDTO> usersDTOS = new ArrayList<>();
 
-        for (Users user : users) {
-            usersDTOS.add(usersDTOer(user));
+        for (Object user : users) {
+            usersDTOS.add(usersDTOer((Users) user));
         }
 
         return usersDTOS;

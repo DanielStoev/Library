@@ -2,7 +2,6 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.BooksDTO;
 import dreamix.library.dtos.LanguagesDTO;
-import dreamix.library.models.Authors;
 import dreamix.library.models.Books;
 import dreamix.library.models.Languages;
 import dreamix.library.services.reusables.BookChecker;
@@ -49,11 +48,11 @@ public class LanguageService extends BookChecker {
     }
 
     public List<LanguagesDTO> findAll() {
-        List<Languages> languages = languagesRepository.findAll();
+        List languages = languagesRepository.findAll();
         List<LanguagesDTO> languagesDTOS = new ArrayList<>();
 
-        for (Languages language : languages) {
-            languagesDTOS.add(genresDTOer(language));
+        for (Object language : languages) {
+            languagesDTOS.add(genresDTOer((Languages) language));
         }
 
         return languagesDTOS;
