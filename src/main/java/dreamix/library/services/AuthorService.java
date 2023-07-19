@@ -2,6 +2,7 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.*;
 import dreamix.library.models.*;
+import dreamix.library.repositories.AuthorsRepository;
 import dreamix.library.services.reusables.BookChecker;
 import dreamix.library.services.reusables.SubService;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,16 @@ public class AuthorService extends BookChecker {
         }
         return authorDTO;
     }
+
+    @Transactional
+    public void createFromEntity(Authors author) {
+        if (author.getId() != null) {
+            authorsRepository.update(author);
+        } else {
+            authorsRepository.create(author);
+        }
+    }
+
 
     @Transactional
     public AuthorsDTO update(AuthorsDTO authorDTO) {

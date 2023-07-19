@@ -42,4 +42,15 @@ public class BooksRepository extends SubRepository<Books> {
 
         return entityManager.createQuery(query).getResultList();
     }
+
+    public List<Books> findBooksByName(String bookName) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Books> query = cb.createQuery(Books.class);
+        Root<Books> bookRoot = query.from(Books.class);
+
+        query.select(bookRoot);
+        query.where(cb.equal(bookRoot.get("title"), bookName));
+
+        return entityManager.createQuery(query).getResultList();
+    }
 }

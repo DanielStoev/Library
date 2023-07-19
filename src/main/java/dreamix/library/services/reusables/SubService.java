@@ -3,6 +3,7 @@ package dreamix.library.services.reusables;
 import dreamix.library.dtos.*;
 import dreamix.library.models.*;
 import dreamix.library.repositories.*;
+import dreamix.library.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
@@ -13,28 +14,20 @@ public abstract class SubService {
 
     @Autowired
     public BooksRepository booksRepository;
-
     @Autowired
     public AuthorsRepository authorsRepository;
-
     @Autowired
     public GenresRepository genresRepository;
-    
     @Autowired
     public LanguagesRepository languagesRepository;
-
     @Autowired
     public User_cardRepository userCardRepository;
-
     @Autowired
     public FormsRepository formsRepository;
-
     @Autowired
     public CopiesRepository copiesRepository;
-
     @Autowired
     public UsersRepository usersRepository;
-
 
     public static Books mapToEntity(BooksDTO booksDTO) {
         Books book = new Books();
@@ -212,64 +205,5 @@ public abstract class SubService {
         booksDTO.setAuthors(bookAuthors);
     }
 
-    @Transactional
-    public void saver(Books book) {
-        if (book.getAuthors() != null) {
-            for (Authors authors : book.getAuthors()) {
-                if (authors.getId() != null) {
-                    authorsRepository.update(authors);
-                } else {
-                    authorsRepository.create(authors);
-                }
-            }
-        }
-        if (book.getGenres() != null) {
-            for (Genres genres : book.getGenres()) {
-                if (genres.getId() != null) {
-                    genresRepository.update(genres);
-                } else {
-                    genresRepository.create(genres);
-                }
-            }
-        }
-        if (book.getLanguages() != null) {
-            for (Languages languages : book.getLanguages()) {
-                if (languages.getId() != null) {
-                    languagesRepository.update(languages);
-                } else {
-                    languagesRepository.create(languages);
-                }
-            }
-        }
-        if (book.getUserCard() != null) {
-            User_card userCard = book.getUserCard();
-            if (userCard.getId() != null) {
-                userCardRepository.update(userCard);
-            } else {
-                userCardRepository.create(userCard);
-            }
-        }
-        if (book.getForm() != null) {
-            Forms forms = book.getForm();
-            if (forms.getId() != null) {
-                formsRepository.update(forms);
-            } else {
-                formsRepository.create(forms);
-            }
-        }
-        if (book.getCopies() != null) {
-            for (Copies copies : book.getCopies()) {
-                if (copies.getId() != null) {
-                    copiesRepository.update(copies);
-                } else {
-                    copiesRepository.create(copies);
-                }
-            }
-        }
-        if (book.getId() != null) {
-            booksRepository.update(book);
-        } else {
-            booksRepository.create(book);
-        }
-    }
+
 }

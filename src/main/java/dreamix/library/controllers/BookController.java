@@ -29,6 +29,11 @@ public class BookController {
         return bookService.findBooksByAuthors(author);
     }
 
+    @GetMapping("/findByBookTitle/{title}")
+    public List<BooksDTO> findBooksByName(@PathVariable String title) {
+        return bookService.findBooksByName(title);
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; CHARSET=UTF-8", consumes = "application/json;charset=UTF-8")
     public BooksDTO create(@RequestBody BooksDTO booksDTO) {
         return bookService.create(booksDTO);

@@ -12,7 +12,7 @@ import java.util.List;
 public class AuthorController {
 
     @Autowired
-    private AuthorService authorService;
+    public AuthorService authorService;
 
     @GetMapping("/all")
     public List<AuthorsDTO> findAll() {

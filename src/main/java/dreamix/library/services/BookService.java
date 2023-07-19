@@ -3,6 +3,7 @@ package dreamix.library.services;
 import dreamix.library.dtos.BooksDTO;
 import dreamix.library.models.*;
 import dreamix.library.services.reusables.SubService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,6 +12,15 @@ import java.util.List;
 
 @Service
 public class BookService extends SubService {
+
+    @Autowired
+    AuthorService authorService;
+
+    @Autowired
+    GenreService genreService;
+
+    @Autowired
+    LanguageService languageService;
 
     public List<BooksDTO> findAll() {
         List<Books> books = booksRepository.findAll();
@@ -36,16 +46,40 @@ public class BookService extends SubService {
         return booksDTO;
     }
 
+    public List<BooksDTO> findBooksByName(String title) {
+        List<BooksDTO> booksDTO = new ArrayList<>();
+        List<Books> books = booksRepository.findBooksByName(title);
+        for (Books book : books) {
+            booksDTO.add(SubService.mapToDTO(book));
+        }
+        return booksDTO;
+    }
+
     @Transactional
     public BooksDTO create(BooksDTO booksDTO) {
         Books book = mapToEntity(booksDTO);
+        if (book.getAuthors() != null) {
+            for (Authors authors : book.getAuthors()) {
+                List<Books> books = new ArrayList<>();
+                books.add(book);
+                authors.setBooks(books);
+                authorService.createFromEntity(authors);
+            }
+        }
+        if (book.getGenres() != null) {
+            for (Genres genres : book.getGenres()) {
+                List<Books> books = new ArrayList<>();
+                books.add(book);
+                genres.setBooks(books);
+                genreService.createFromEntity(genres);
+            }
+        }
         if (book.getLanguages() != null) {
             for (Languages languages : book.getLanguages()) {
-                if (languages.getId() != null) {
-                    languagesRepository.update(languages);
-                } else {
-                    languagesRepository.create(languages);
-                }
+                List<Books> books = new ArrayList<>();
+                books.add(book);
+                languages.setBooks(books);
+                languageService.createFromEntity(languages);
             }
         }
         if (book.getUserCard() != null) {
@@ -77,24 +111,6 @@ public class BookService extends SubService {
             booksRepository.update(book);
         } else {
             booksRepository.create(book);
-        }
-        if (book.getAuthors() != null) {
-            for (Authors authors : book.getAuthors()) {
-                if (authors.getId() != null) {
-                    authorsRepository.update(authors);
-                } else {
-                    authorsRepository.create(authors);
-                }
-            }
-        }
-        if (book.getGenres() != null) {
-            for (Genres genres : book.getGenres()) {
-                if (genres.getId() != null) {
-                    genresRepository.update(genres);
-                } else {
-                    genresRepository.create(genres);
-                }
-            }
         }
         return booksDTO;
     }

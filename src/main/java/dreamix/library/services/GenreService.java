@@ -78,6 +78,15 @@ public class GenreService extends BookChecker {
     }
 
     @Transactional
+    public void createFromEntity(Genres genre) {
+        if (genre.getId() != null) {
+            genresRepository.update(genre);
+        } else {
+            genresRepository.create(genre);
+        }
+    }
+
+    @Transactional
     public GenresDTO update(GenresDTO genresDTO) {
         Genres genres = genresENTer(genresDTO);
         if (genres.getBooks() != null) {

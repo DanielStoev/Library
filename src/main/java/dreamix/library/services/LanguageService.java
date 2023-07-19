@@ -2,6 +2,7 @@ package dreamix.library.services;
 
 import dreamix.library.dtos.BooksDTO;
 import dreamix.library.dtos.LanguagesDTO;
+import dreamix.library.models.Authors;
 import dreamix.library.models.Books;
 import dreamix.library.models.Languages;
 import dreamix.library.services.reusables.BookChecker;
@@ -75,6 +76,15 @@ public class LanguageService extends BookChecker {
             languagesRepository.create(languages);
         }
         return languagesDTO;
+    }
+
+    @Transactional
+    public void createFromEntity(Languages languages) {
+        if (languages.getId() != null) {
+            languagesRepository.update(languages);
+        } else {
+            languagesRepository.create(languages);
+        }
     }
 
     @Transactional
